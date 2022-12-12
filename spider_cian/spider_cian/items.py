@@ -18,3 +18,5 @@ class SpiderCianItem(scrapy.Item):
     district = scrapy.Field()
     street = scrapy.Field()
     metro = scrapy.Field()
+    flat_url = scrapy.Field()
+    dist_to_metro = scrapy.Field()

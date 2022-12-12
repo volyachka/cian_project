@@ -1,17 +1,6 @@
 import scrapy
 from urllib.parse import urlencode
-from urllib.parse import urlparse
-from urllib.parse import urljoin
-import re
-import json
 from spider_cian.items import SpiderCianItem
-
-# API = '4b22e100200a489f9fdfdcec2b3b1eb3'
-
-# def get_url(url):
-#     payload = {'api_key': API, 'url': url}
-#     proxy_url = 'http://api.scraperapi.com/?' + urlencode(payload) # обращаемся к ScraperAPI, указывая необходимый сайт и API ключ
-#     return proxy_url
 
 class CianproductspiderSpider(scrapy.Spider):
     name = 'CianProductSpider'
@@ -31,10 +20,10 @@ class CianproductspiderSpider(scrapy.Spider):
     def parse_flat_page(self, response):
         item = SpiderCianItem()
         price = response.xpath('//span[@id="price_nat" and @itemprop="price"]/text()').extract()
-        title = response.xpath('//div[@class="title-block premium"]//div[@class="title"]/h1/text()').extract()[0].replace("\xa0", "")
+        title = response.xpath('//div[@class="title"]/h1/text()').extract()[0].replace("\xa0", "")
         price_spaces = price[0].replace("\xa0", " ")
         price_mortgage = price[0].replace("\xa0", "")
-        address_line = response.xpath('//div[@class="title-block premium"]//div[@class="address-line"]/text()[1]').extract()[0]
+        address_line = response.xpath('//div[@class="address-line"]/text()').extract()[0].replace("\xa0", "")
         data_first_gen = response.xpath('//div[@class="b-dotted-block__col"]')[0]
         right_data_gen = data_first_gen.xpath('.//div[@class="b-dotted-block__right"]/span[1]/text()[1]').extract()
         left_data_gen = list(data_first_gen.xpath('.//div[@class="b-dotted-block__left"]/span[1]/text()[1]').extract())
@@ -67,6 +56,11 @@ class CianproductspiderSpider(scrapy.Spider):
         metro = loc_info["Метро"]
         metro = [elem.replace("\xa0", " ") for elem in metro]
         photos = response.xpath('//div[starts-with(@class, "slide js-slide") and @itemprop="image"]/@src').extract()
+        house_info_left = response.xpath('//div[@class="page__section house"]//div[@class="b-dotted-block__left"]/span/text()').extract()
+        house_info_right = response.xpath('//div[@class="page__section house"]//div[@class="b-dotted-block__right"]/span/text()').extract()
+        house_info = dict(list(zip(house_info_left, house_info_right)))
+        if ("Расстояние до метро" not in house_info):
+            house_info["Расстояние до метро"] = ""
 
         item["title"] = title
         item["price_spaces"] = price_spaces
@@ -79,4 +73,6 @@ class CianproductspiderSpider(scrapy.Spider):
         item["district"] = district
         item["street"] = street
         item["metro"] = metro
+        item["flat_url"] = response.url
+        item["dist_to_metro"] = house_info["Расстояние до метро"].strip()
         yield item

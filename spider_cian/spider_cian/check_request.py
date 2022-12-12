@@ -17,9 +17,7 @@ def get_url(url):
 
 
 page = 1
-cur_url = 'https://www.cian.ru/cat.php?' + urlencode(
-    {'deal_type': 'sale', 'engine_version': '2', 'offer_type': 'flat',
-     'p': str(page), 'region': '1', 'room1': '1', 'room2': '1'})
+cur_url = "https://yandex.ru/maps/213/moscow/house/proletarskiy_prospekt_7/Z04YcAJnTUwEQFtvfXp1dH9iYA==/?ll=37.657494%2C55.645314&z=17.03"
 
 r = requests.get(get_url(cur_url))
-print(r)
+print(r.xpath('//'))
