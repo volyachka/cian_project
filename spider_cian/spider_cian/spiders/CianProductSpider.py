@@ -6,15 +6,15 @@ class CianproductspiderSpider(scrapy.Spider):
     name = 'CianProductSpider'
     # allowed_domains = ['cian.ru']
     start_urls = ['https://www.cian.ru/']
+    max_pages = 1308
     def start_requests(self):
-        page = 1
-        cur_url = 'https://www.gdeetotdom.ru/kupit-kvartiru-moskva/?' + urlencode({'page': str(page)})
-        print(cur_url)
-        yield scrapy.Request(url=cur_url, callback=self.parse_keyword_response)
+        for page in range(1, self.max_pages + 1):
+            cur_url = 'https://www.gdeetotdom.ru/kupit-kvartiru-moskva/?' + urlencode({'page': str(page)})
+            yield scrapy.Request(url=cur_url, callback=self.parse_keyword_response)
 
 
     def parse_keyword_response(self, response):
-        for res in response.xpath('//div[starts-with(@class, "c-card premium")]//a[@class="c-card__title"]/@href').extract():
+        for res in response.xpath('//a[@class="c-card__title"]/@href').extract():
             yield scrapy.Request(url=res, callback=self.parse_flat_page)
 
     def parse_flat_page(self, response):
