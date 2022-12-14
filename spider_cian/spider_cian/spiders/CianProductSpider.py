@@ -8,7 +8,8 @@ class CianproductspiderSpider(scrapy.Spider):
     start_urls = ['https://www.cian.ru/']
     max_pages = 1308
     def start_requests(self):
-        for page in range(1, self.max_pages + 1):
+        for page in range(900, self.max_pages + 1):
+            print(page)
             cur_url = 'https://www.gdeetotdom.ru/kupit-kvartiru-moskva/?' + urlencode({'page': str(page)})
             yield scrapy.Request(url=cur_url, callback=self.parse_keyword_response)
 
