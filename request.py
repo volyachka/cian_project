@@ -10,8 +10,10 @@ def get_information(data):
     mortgage['link_to_apply'] = 'https://www.banki.ru' + data.find_all('a')[0].get('href')
     return mortgage
 
-def get_mortgage(initialFee = 2500000, price = 6000000, isHaveChildBefore2018 = 1, remainingPayment =3000000, priceForRefinance =4000000):
-    link = f"""https://www.banki.ru/products/hypothec/?initialFee={initialFee}&price={price}&period=7&isHaveChildBefore2018={isHaveChildBefore2018}&remainingPayment={remainingPayment}&priceForRefinance={priceForRefinance}&periodForRefinance=7&sortType=popular&sortDirection=desc&selectedFormIndex=0"""
+def get_mortgage(initialFee = 2500000, price = 6000000, isHaveChildBefore2018 = 1, remainingPayment =3000000, priceForRefinance =4000000, period = 1, periodForRefinance = 7):
+    # dict_of_period = [1, 2, 4, 5, 10, 15, 20, 25, 30, 35]
+
+    link = f"""https://www.banki.ru/products/hypothec/?initialFee={initialFee}&price={price}&period={period}&isHaveChildBefore2018={isHaveChildBefore2018}&remainingPayment={remainingPayment}&priceForRefinance={priceForRefinance}&periodForRefinance={periodForRefinance}&sortType=popular&sortDirection=desc&selectedFormIndex=0"""
     r = requests.get(link)
     page = r.content.decode("utf-8")
     soup = BeautifulSoup(page, 'html.parser')
@@ -23,4 +25,4 @@ def get_mortgage(initialFee = 2500000, price = 6000000, isHaveChildBefore2018 = 
     print(list_of_top_3_mortgages)
     return list_of_top_3_mortgages
 
-get_mortgage()
+# get_mortgage()
