@@ -14,15 +14,15 @@ def get_mortgage(initialFee = 2500000, price = 6000000, isHaveChildBefore2018 = 
     # dict_of_period = [1, 2, 4, 5, 10, 15, 20, 25, 30, 35]
 
     link = f"""https://www.banki.ru/products/hypothec/?initialFee={initialFee}&price={price}&period={period}&isHaveChildBefore2018={isHaveChildBefore2018}&remainingPayment={remainingPayment}&priceForRefinance={priceForRefinance}&periodForRefinance={periodForRefinance}&sortType=popular&sortDirection=desc&selectedFormIndex=0"""
+    return link
     r = requests.get(link)
     page = r.content.decode("utf-8")
     soup = BeautifulSoup(page, 'html.parser')
     root = soup.find_all('tr')
+    return soup.prettify()
     list_of_top_3_mortgages = list()
     list_of_top_3_mortgages.append(get_information(root[1]))
     list_of_top_3_mortgages.append(get_information(root[2]))
     list_of_top_3_mortgages.append(get_information(root[3]))
-    print(list_of_top_3_mortgages)
+    # print(list_of_top_3_mortgages)
     return list_of_top_3_mortgages
-
-# get_mortgage()
