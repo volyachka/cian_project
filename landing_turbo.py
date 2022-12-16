@@ -314,12 +314,18 @@ def create_flat_div(flat_ind):
                            html.Li(className="flat-title", children=flat['title']),
                            html.Li(className="flat-floor", children="Этаж: " + flat['floor']),
                            html.Li(className="flat-address", children=flat['address_line']),
-                           html.A(className="button", href=flat['flat_url'].values[0], target="_blank", children="Подробнее"),
-                           html.Button(className="button", n_clicks=0,
-                                       id={'type': 'show-mortgage',
-                                           'index': flat_ind
-                                       },
-                                       value="Рассчитать ипотеку"),
+                           html.Div(
+                               children=[
+                                   html.Span(html.A(className="button", href=flat['flat_url'].values[0], target="_blank",
+                                                    children="Подробнее")),
+                                   html.Span(html.Button(className="button", n_clicks=0,
+                                                         id={'type': 'show-mortgage',
+                                                             'index': flat_ind
+                                                            },
+                                                         children="Рассчитать ипотеку"))
+                               ],
+                               className="flat-box-buttons"
+                           )
                        ]),
                        html.Hr()
                    ])

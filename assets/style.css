@@ -88,20 +88,20 @@ a:hover {
     overflow-y : auto;
 }
 
-.scroll__section::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: #C4CDD5;
-    --webkit-box-shadow: 0 0 1px #C4CDD5;
-}
+/*.scroll__section::-webkit-scrollbar-thumb {*/
+/*    border-radius: 5px;*/
+/*    background-color: #C4CDD5;*/
+/*    --webkit-box-shadow: 0 0 1px #C4CDD5;*/
+/*}*/
 
-.scroll__section::-webkit-scrollbar {
-    --webkit-appearance: none;
-    width: 10px;
-}
+/*.scroll__section::-webkit-scrollbar {*/
+/*    --webkit-appearance: none;*/
+/*    width: 10px;*/
+/*}*/
 
-.scroll__section::-webkit-scrollbar-corner {
-    background: rgba(0,0,0,0);
-}
+/*.scroll__section::-webkit-scrollbar-corner {*/
+/*    background: rgba(0,0,0,0);*/
+/*}*/
 
 .subheader {
     font-size: 1.2em;
@@ -157,9 +157,14 @@ a:hover {
 .flat-box-list {
     background-color: #404040;
     list-style-type: none;
-    padding: 10px 10px 0px 15px;
+    padding: 10px 10px 10px 15px;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
+}
+
+.flat-box-buttons {
+    display: flex;
+    justify-content: space-between;
 }
 
 .image-container {
@@ -171,6 +176,8 @@ a:hover {
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
 }
+
+
 
 #contacts {
     ;
